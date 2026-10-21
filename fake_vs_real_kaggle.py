@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import re
@@ -10,9 +11,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
-# Load two CSV files
-fake_df = pd.read_csv("/kaggle/input/fake-and-real-news-dataset/Fake.csv")
-real_df = pd.read_csv("/kaggle/input/fake-and-real-news-dataset/True.csv")
+# Load two CSV files (Kaggle input folder when run there, otherwise ./data)
+DATA_DIR = "/kaggle/input/fake-and-real-news-dataset"
+if not os.path.isdir(DATA_DIR):
+    DATA_DIR = "data"
+fake_df = pd.read_csv(os.path.join(DATA_DIR, "Fake.csv"))
+real_df = pd.read_csv(os.path.join(DATA_DIR, "True.csv"))
 
 fake_df["label"] = 1  # 1 for Fake
 real_df["label"] = 0  # 0 for Real
